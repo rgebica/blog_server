@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //config.databaseUrl = 'mongodb://tai:taitai1@ds147180.mlab.com:47180/tai';
-routes(app);
 
 mongoose.connect(config.databaseUrl, {
   useNewUrlParser: true,
@@ -39,6 +38,7 @@ process.on('SIGINT', () => {
   });
 });
 
+routes(app);
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });

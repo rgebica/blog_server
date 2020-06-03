@@ -7,9 +7,9 @@ import config from './config';
 import routes from './REST/routes'
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
-
 
 app.use(express.static('public'));
 app.use(morgan('dev'));
@@ -18,6 +18,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //config.databaseUrl = 'mongodb://tai:taitai1@ds147180.mlab.com:47180/tai';
+routes(app);
+
 mongoose.connect(config.databaseUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -37,11 +39,10 @@ process.on('SIGINT', () => {
   });
 });
 
-app.get('/*', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-routes(app);
 app.listen(process.env.PORT || 3000, function () {
   console.info('Server is running')
 
